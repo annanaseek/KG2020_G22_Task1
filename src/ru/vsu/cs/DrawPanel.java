@@ -14,7 +14,6 @@ public class DrawPanel extends JPanel {
     public void drawPicture(Graphics2D gr) {
         Random random = new Random();
 
-
         int horizon = getHeight() / 2 - 50;
         int xSun = 400;
         int ySun = 100;
@@ -31,21 +30,29 @@ public class DrawPanel extends JPanel {
         int heightOfAnts = 25;
         int[] xAnteaterNose = {0, 0, 100, 110};
         int[] yAnteaterNose = {horizon - 120, horizon - 35, horizon - 10, horizon - 20};
+        int weightOfTextCloud = 150;
+        int heightOfTextCloud = 100;
 
         drawBackground(gr, horizon);
+
         drawSun(gr, xSun, ySun, rSun, rRays, numberOfRays);
 
         for (int i = 0; i < numberOfClouds; i++) {
             drawCloud(gr, random.nextInt(getWidth() - weightOfClouds),
                     random.nextInt(horizon - 2 * heightOfClouds), weightOfClouds, heightOfClouds);
         }
+
         drawAnthill(gr, xAnthill, yAnthill);
 
         for (int i = 0; i < numberOfAnts; i++) {
             drawAnt(gr, random.nextInt(getWidth()),
                     horizon + random.nextInt(getHeight() - horizon - heightOfAnts), weightOfAnts, heightOfAnts);
         }
+
         drawAnteaterNose(gr, xAnteaterNose, yAnteaterNose);
+
+        int indexOfMax = findIndexOfMax(xAnteaterNose);
+        drawTextCloud(gr, xAnteaterNose[indexOfMax] + 20, yAnteaterNose[indexOfMax] - 20, weightOfTextCloud, heightOfTextCloud);
     }
 
     private void drawBackground(Graphics2D g, int y) {          //y-координата, где "сходятся" земля и небо
@@ -98,6 +105,27 @@ public class DrawPanel extends JPanel {
     private void drawAnteaterNose(Graphics2D g, int[] x, int[] y) {
         g.setColor(new Color(153, 102, 102));
         g.fillPolygon(x, y, 4);
+    }
+
+    private void drawTextCloud(Graphics2D g, int x0, int y0, int w, int h) {
+        int[] x = {x0 + w / 4, x0, x0 + w};
+        int[] y = {y0 - h / 2, y0, y0 - h / 2};
+        g.setColor(Color.white);
+        g.fillOval(x0, y0 - h, w, h);
+        g.fillPolygon(x, y, 3);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font(Font.SERIF, Font.ITALIC, 20));
+        g.drawString("а вот и обед", x0 + 20, y0 - h / 2);
+    }
+
+    private int findIndexOfMax(int[] array) {
+        int max = 0;
+        for (int i = 1; i < array.length - 1; i++) {
+            if (array[i] > array[max]) {
+                max = i;
+            }
+        }
+        return max;
     }
 
 
