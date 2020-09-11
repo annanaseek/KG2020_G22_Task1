@@ -2,6 +2,7 @@ package ru.vsu.cs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class DrawPanel extends JPanel {
     @Override
@@ -11,16 +12,24 @@ public class DrawPanel extends JPanel {
     }
 
     public void drawPicture (Graphics2D gr) {
+        Random random = new Random();
 
-        int numberOfClouds = 3;
         int numberOfAnts = 300;
-        int heightOfSky = 500;
+        int horizon = 500;
+        int xSun = 400;
+        int ySun = 100;
+        int rSun = 40;
+        int rRays = 80;
+        int numberOfRays = 25;
+        int numberOfClouds = 5;
+        int weightOfClouds = 100;
+        int heightOfClouds = 60;
 
+        drawBackground(gr, horizon);
+        drawSun(gr, xSun, ySun, rSun, rRays, numberOfRays);
 
-        drawBackground(gr, heightOfSky);
-        drawSun(gr, 400, 100, 40, 80, 25);
         for (int i = 0; i < numberOfClouds; i++) {
-//            drawCloud(gr);
+            drawCloud(gr,random.nextInt(getWidth() - weightOfClouds), random.nextInt(horizon - 2 * heightOfClouds), weightOfClouds, heightOfClouds);
         }
 //        drawAnthill(gr);
         for (int i = 0; i < numberOfAnts; i++) {
@@ -56,9 +65,9 @@ public class DrawPanel extends JPanel {
         }
 
     }
-    private void drawCloud (Graphics2D g, int x, int y) {
-
-
+    private void drawCloud (Graphics2D g, int x, int y, int w, int h) {
+        g.setColor(Color.WHITE);
+        g.fillOval(x, y, w, h);
     }
 
     private void drawAnteaterNose (Graphics2D g, int x, int y) {
