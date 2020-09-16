@@ -27,7 +27,7 @@ public class DrawPanel extends JPanel {
         int[] yAnthill = {horizon - 2 * heightOfClouds, horizon + 100, horizon + 100, horizon - 2 * heightOfClouds};
         int numberOfAnts = 45;
         int weightOfAnts = 30;
-        int heightOfAnts = 25;
+        int heightOfAnts = 20;
         int[] xAnteaterNose = {0, 0, 100, 110};
         int[] yAnteaterNose = {horizon - 120, horizon - 35, horizon - 10, horizon - 20};
         int weightOfTextCloud = 150;
